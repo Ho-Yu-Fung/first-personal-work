@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="echarts.min.js"></script>
+    <script src="world.js"></script>
+</head>
+<body>
+<div id="box" style="width: 1960px;height: 1080px"></div>
+<script>
+    var myChart = echarts.init(document.getElementById("box"))
+    myChart.setOption({
+        title:{
+            text:"全球疫情统计",
+            subtext:"Ho-Yu-Fung’s Fistt-Personal-Work",
+            left:"center"
+        },
+        backgroundColor:"#f7f7f7",
+        series:[{
+            type:"map",
+            map:"world"
+        }]
+    })
+</script>
+</body>
+</html>
