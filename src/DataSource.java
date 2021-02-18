@@ -14,11 +14,11 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 
-public class JavaDemo {
+public class DataSource {
     public static final String DEF_CHATSET = "UTF-8";
     public static final int DEF_CONN_TIMEOUT = 30000;
     public static final int DEF_READ_TIMEOUT = 30000;
@@ -34,7 +34,7 @@ public class JavaDemo {
     public static final String APICODE ="235edcda6fdb42799130355a876f11f5";
 
     //1.API方法
-    public static void getRequest(){
+    public static String getRequest(){
         String result =null;
         String url ="https://api.yonyoucloud.com/apis/dst/ncov/wholeworld";//请求接口地址
         String method = "GET";
@@ -46,10 +46,14 @@ public class JavaDemo {
 
         try {
             result = net(url, params, headerParams, method, paramFormat);
-            System.out.println(result);
+            JSONObject jsonObject = JSONObject.parseObject(result);
+            JSONObject data = jsonObject.getJSONObject("data");
+            JSONArray continent =data.getJSONArray("continent");
+            return continent.toJSONString();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /**
@@ -152,7 +156,7 @@ public class JavaDemo {
     }
 
     //将map型转为请求参数型
-    public static String jsonencode(Map<String,Object>data) throws JSONException {
+    public static String jsonencode(Map<String,Object>data) throws Exception {
         JSONObject jparam = new JSONObject();
         for (Map.Entry i : data.entrySet())
             jparam.put((String) i.getKey(), i.getValue());
@@ -203,7 +207,7 @@ public class JavaDemo {
         javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
     }
 
-    public static void main(String[] args) {
-        getRequest();
+    public static String getData() {
+        return getRequest();
     }
 }
