@@ -43,7 +43,6 @@ public class DataSource {
 
         Map<String, Object> headerParams = new HashMap<String, Object>();//请求头参数
         headerParams.put("apicode", APICODE);//APICODE
-
         try {
             result = net(url, params, headerParams, method, paramFormat);
             JSONObject jsonObject = JSONObject.parseObject(result);
